@@ -5,7 +5,7 @@ const adminRoutes = require('./routes/api/v1/admin');
 const authRouters = require('./routes/api/v1/auth');
 const authMiddleware = require('./middlewares/auth');
 const rateLimit = require('express-rate-limit');
-const { default: mongoose } = require('mongoose');
+const {default: mongoose} = require('mongoose');
 const clientRoutes = require('./routes/api/v1/Client');
 
 const app = express();

@@ -2,13 +2,13 @@
 const express = require('express');
 const authMiddleware = require('../../../middlewares/auth');
 const Settings = require('../../../models/Settings');
-const { default: axios } = require('axios');
+const {default: axios} = require('axios');
 const router = express.Router();
 
 // Update settings
 router.post('/settings', async (req, res) => {
 
-    const { settings } = req.body;
+    const {settings} = req.body;
 
     const out = {};
 
@@ -16,9 +16,7 @@ router.post('/settings', async (req, res) => {
 
     for (const k of settings) {
 
-        const val = await Settings._get(k);
-
-        out[k] = val;
+        out[k] = await Settings._get(k);
     }
 
     res.json(out);
@@ -28,7 +26,7 @@ router.post('/settings', async (req, res) => {
 // Update settings
 router.put('/settings', async (req, res) => {
 
-    const { settings } = req.body;
+    const {settings} = req.body;
 
     // update Settings
 
@@ -41,8 +39,7 @@ router.put('/settings', async (req, res) => {
         await Settings._set(key, value);
     }
 
-    res.json({ message: 'Settings updated' });
-
+    res.json({message: 'Settings updated'});
 
 });
 
