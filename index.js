@@ -20,17 +20,28 @@ const limiter = rateLimit({
     }
 });
 
+
+const allowedOrigins = ['http://localhost:5173', 'http://localhost:9000'];
+
 const corsOptions = {
-    origin: 'http://localhost:9000',
+    origin: function (origin, callback) {
+        if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
     optionsSuccessStatus: 200,
     credentials: true,
 };
+
+// Handle preflight requests
+app.options('*', cors(corsOptions));
+
 app.use(cors(corsOptions));
 
 app.use(express.json()); // Middleware to parse JSON bodies
 
-// Handle preflight requests
-app.options('*', cors(corsOptions));
 
 app.use('/api/v1/auth', limiter, authRouters);
 app.use('/api/v1/client', clientRoutes);
